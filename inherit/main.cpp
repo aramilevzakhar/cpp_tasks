@@ -56,6 +56,11 @@ void sdfa(A2* a) {
 
 	}
 
+	titsu (int i = 0; i < 10; i++) {
+		cout << "C++ trash" << endl;
+
+	}
+
 }
 
 class B3 : public A2 {
