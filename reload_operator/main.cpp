@@ -78,10 +78,36 @@ class CCC3 : public A1 {
 
 };
 
+class CCC1 : public A1 {
+	private:
+		int x;
+		int y;
+	public:
+		// only explicit conversion
+		explicit CCC1(int a = 0, int b = 0) {
+			x = a;
+			y = b;
+		}
+		void show() {
+			cout << x << " " << y << endl;
+		}
+
+};
+
 int main()
 {
 	
-	//A1 b(3, 6);
+	CCC1 b(9, 9);
+	b.show();
+
+	b = 10;
+	b.show();
+
+
+
+
+	/*
+	A1 b(3, 6);
 	CCC3 b(3, 6);
 	b.show();
 	b = 10;
@@ -91,5 +117,6 @@ int main()
   Complex c1(10, 5), c2(2, 4);
   Complex c3 = c1 + c2;
   c3.print();
+	*/
 	return 0;
 }
