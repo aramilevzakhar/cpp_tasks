@@ -100,10 +100,12 @@ int main()
 	CCC1 b(9, 9);
 	b.show();
 
-	b = 10;
+	// b = 10; // error
+	
 	b.show();
 
 
+	
 
 
 	/*
