@@ -68,6 +68,9 @@ std::vector<size_t> merge(std::vector<size_t> a, std::vector<size_t> b) {
 
 	result.reserve(result.size() + std::distance(a.begin(), a.end()));
 	result.reserve(result.size() + std::distance(b.begin(), b.end()));
+
+
+
 	result.insert(result.end(), s1.begin(), s1.end());
 	result.insert(result.end(), s2.begin(), s2.end());
 
