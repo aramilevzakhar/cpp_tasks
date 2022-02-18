@@ -98,7 +98,7 @@ class CCC1 : public A1 {
 
 class A {
 	public:
-		virtual void f() {
+		void f() {
 			cout << "Hello A" << endl;
 		}
 };
