@@ -98,14 +98,14 @@ class CCC1 : public A1 {
 
 class A {
 	public:
-		void f() {
+		virtual void f() {
 			cout << "Hello A" << endl;
 		}
 };
 
 class B : public A {
 	public:
-		void f() {
+		void f() override {
 			cout << "Hello B" << endl;
 		}
 };
@@ -132,6 +132,14 @@ int main()
 	ap->f();
 	bp->f();
 
+	// ar.A::f();
+	// br.A::f();
+
+
+	// ba1.f();
+	// ba1.A::f();
+	// ca1.f();
+	// ca1.B::f();
 	// CCC1 b(9, 9);
 	// b.show();
 	// b = 10; // error
