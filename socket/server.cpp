@@ -8,26 +8,46 @@
 #include <string.h>
 #include <thread>
 
+
 #define PORT 8080
 
 
-void lissen() {
+
+void hear(int* sock) {
+	int new_socket, valread;
+	char buffer[1024];
+
+	while (true) {
+		valread = read(*sock, buffer, 1024);
+		printf("%s\n", buffer );
+
+	}
 
 }
 
-void sending() {
+void sending(int* sock) {
+	std::string mess;
+	while (true) {
+		getline(std::cin, mess);
+		//mess = std::to_string(i) + mess + "\n";
+		send(*sock, mess.c_str(), mess.length(), 0);
+
+	}
+
 
 }
 
 int main() {
 	using namespace std;
+	//sleep(10);
 
-  int server_fd, new_socket, valread;
+
+  int server_fd, sock, valread;
   struct sockaddr_in address;
   int opt = 1;
   int addrlen = sizeof(address);
   char buffer[1024] = {0};
-  const char *hello = "Hello from server";
+
      
   // Creating socket file descriptor
   if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
@@ -53,13 +73,61 @@ int main() {
       perror("listen");
       exit(EXIT_FAILURE);
   }
+
+
+	/*
+	cout << "Server lissent to you.." << endl;
+	thread sss1(hear, &server_fd, &address, &addrlen, buffer);
+	cout << "I'm here" << endl;
+	*/
+
+
+	/*
+	if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
+			perror("accept");
+			exit(EXIT_FAILURE);
+	} else {
+		cout << "A new communication.." << endl;
+	}
+	*/
+
+		if ((sock = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
+				perror("accept");
+				exit(EXIT_FAILURE);
+		} else {
+			cout << "A new person.." << endl;
+		}
+
+
+		cout << address.sin_port << endl;
+		thread sss1(hear, &sock);
+		thread sss2(sending, &sock);
+		
+
+
+
+		sss1.join();
+		sss2.join();
+
+
+
+
+
+
+
+
+
+
+
+	//sss1.join();
+	/*
   if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
       perror("accept");
       exit(EXIT_FAILURE);
   }
   valread = read( new_socket , buffer, 1024);
   printf("%s\n", buffer );
-  send(new_socket , hello , strlen(hello) , 0 );
   printf("Hello message sent\n");
+	*/
 	return 0;
 }
