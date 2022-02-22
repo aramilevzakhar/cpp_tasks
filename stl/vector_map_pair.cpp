@@ -20,10 +20,10 @@ int main() {
 	using namespace std;
 	map<int, string> m1l = {};
 
-	m1l.insert(pair<int, string>(1, "test 1"));
-	m1l.insert(pair<int, string>(2, "test 2"));
-	m1l.insert(pair<int, string>(3, "test 3"));
-	m1l.insert(pair<int, string>(5, "test 4"));
+	m1l.insert(pair<int, string>(1, "Hello friend  1  !"));
+	m1l.insert(pair<int, string>(2, "Hello friend  1  !"));
+	m1l.insert(pair<int, string>(3, "I miss you very much!"));
+	m1l.insert(pair<int, string>(5, "Hello friend  5  !"));
 
 
 	cout << "count --- " << m1l.count(3) << endl;
