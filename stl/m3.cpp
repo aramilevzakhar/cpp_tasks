@@ -5,8 +5,13 @@
 #include <list>
 #include <ranges>
 
-void printInt(int number) {
-	std::cout << number << std::endl;
+template<class T>
+void printInt(T* arr) {
+	std::cout << "[ ";
+	for (auto element : *arr) {
+		std::cout << element << " ";
+	}
+	std::cout << " ]\n";
 }
 
 int main() {
@@ -14,10 +19,26 @@ int main() {
 	vector<int> m1;
 	vector<int> arr = {1, 342, 324, 54, 43, 54, 3, 8, 12};
 
+	vector<int>::iterator first;
+	vector<int>::iterator last;
+	
+	first = arr.begin();
+	last = arr.end();
+	cout << "distance = " << distance(first, last) << endl;
+
+	for (auto it = arr.end() - 1; it != arr.begin() - 1; --it) {
+		cout << *it << " ";
+	}
 
 
+	cout << endl;
 
+	printInt(&arr);
+	cout << arr.size() << endl;
+	arr.reserve(10);
 
+	cout << arr.size() << endl;
+	printInt(&arr);
 
 	cout << "even/ocasional: " << m1.capacity() << endl;
 	for (int i = 0; i < 10; i++) {
