@@ -7,12 +7,7 @@ class T {
 	private:
 		T* next;
 		int value;
-
-
 	public:
-
-
-		
 		T() {
 			this->next = NULL;
 		}
@@ -22,6 +17,10 @@ class T {
 
 		}
 		
+		T operator +(int age) {
+
+		}
+
 		void addValue(int p) {
 			T *new_node = new T(p);
 
