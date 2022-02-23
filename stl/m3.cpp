@@ -18,6 +18,9 @@ int main() {
 	using namespace std;
 	vector<int> m1;
 	vector<int> arr = {1, 342, 324, 54, 43, 54, 3, 8, 12};
+	vector<int>::iterator it = find(arr.begin(), arr.end(), 8);
+	cout << "iterator: " << *it << endl;
+	arr.insert(it, 122112213);
 
 	vector<int>::iterator first;
 	vector<int>::iterator last;
