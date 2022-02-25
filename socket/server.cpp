@@ -1,37 +1,40 @@
 #include <iostream>
+#include <vector>
 #include <stdio.h>
 #include <unistd.h>
+#include <list>
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <netinet/in.h>
-//#include <string>
 #include <string.h>
 #include <thread>
-
+#include <future>
 
 #define PORT 8080
 
 
-
-void hear(int* sock) {
+void hear(int* v1, int v2) {
 	int new_socket, valread;
-	char buffer[1024];
 
 	while (true) {
-		valread = read(*sock, buffer, 1024);
-		printf("%s\n", buffer );
+		char* buffer = new char[1024];
+		valread = read(*v1, buffer, 1024);
+		printf("%s\n", (buffer) );
+		delete [] buffer;
 
 	}
+	std::cout << "(close)v2: " << v2 << std::endl;
+
 
 }
 
-void sending(int* sock) {
+void sending(int* v1) {
 	std::string mess;
 	while (true) {
-		getline(std::cin, mess);
-		//mess = std::to_string(i) + mess + "\n";
-		send(*sock, mess.c_str(), mess.length(), 0);
+		// getline(std::cin, mess);
+		// mess = std::to_string(i) + mess + "\n";
 
+		send(*v1, mess.c_str(), mess.length(), 0);
 	}
 
 
@@ -40,9 +43,7 @@ void sending(int* sock) {
 int main() {
 	using namespace std;
 	//sleep(10);
-
-
-  int server_fd, sock, valread;
+  int server_fd, valread;
   struct sockaddr_in address;
   int opt = 1;
   int addrlen = sizeof(address);
@@ -69,6 +70,7 @@ int main() {
       perror("bind failed");
       exit(EXIT_FAILURE);
   }
+
   if (listen(server_fd, 3) < 0) {
       perror("listen");
       exit(EXIT_FAILURE);
@@ -91,35 +93,40 @@ int main() {
 	}
 	*/
 
-		if ((sock = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
+	vector<int*> th_array = {};
+	thread th_arr[3];
+	int i = 0;
+
+	int *sock = new int[3];
+
+	while (true) {
+		if ((sock[i] = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
 				perror("accept");
 				exit(EXIT_FAILURE);
 		} else {
 			cout << "A new person.." << endl;
 		}
+		//array.push_back(&sock);
+		cout << " socket = " << &sock[i] << endl;
+		th_arr[i] = thread(hear, &sock[i], i);
+		i++;
 
 
-		cout << address.sin_port << endl;
-		thread sss1(hear, &sock);
-		thread sss2(sending, &sock);
+		//thread sss1(hear, &sock);
+		//thread sss2(sending, &sock);
 		
+		//sss1.join();
+
+
+	}
+
+	for (int i = 0; i < 3; i++) {
+		delete [] sock;
+	}
 
 
 
-		sss1.join();
-		sss2.join();
-
-
-
-
-
-
-
-
-
-
-
-	//sss1.join();
+	th_arr[0].join();
 	/*
   if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
       perror("accept");

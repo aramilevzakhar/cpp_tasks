@@ -37,6 +37,7 @@ void sending(int* sock) {
 
 		//mess = std::to_string(i) + mess + "\n";
 		send(*sock, mess.c_str(), mess.length(), 0);
+		mess = "";
 
 	}
 
