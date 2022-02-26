@@ -1,55 +1,60 @@
 #include <iostream>
 #include <tuple>
-#include <thread>
-#include <time.h>
-#include <unistd.h>
+#include <string>
+ 
+// helper function to print a tuple of any size
 
-template<class... T>
-void print(std::tuple<T...>) {
-
-
-}
-
-
-void print_line(int i) {
+/*
+template<class Tuple, std::size_t N>
+struct TuplePrinter {
+    static void print(const Tuple& t) 
+    {
+        TuplePrinter<Tuple, N-1>::print(t);
+       std::cout << ", " << std::get<N-1>(t);
+    }
+};
+ 
+template<class Tuple>
+struct TuplePrinter<Tuple, 1> {
+    static void print(const Tuple& t) 
+    {
+        std::cout << std::get<0>(t);
+    }
+};
+*/
+ 
+template<typename... Args, std::enable_if_t<sizeof...(Args) == 0, int> = 0>
+void print(const std::tuple<Args...>& t) {
 	using namespace std;
-	sleep(rand() % 10);
-	cout << i << endl;
+	std::cout << "()\n";
+
+	cout << "zero" << endl;
+
+}
+ 
+template<typename... Args, std::enable_if_t<sizeof...(Args) == 3, int> = 0>
+void print(const std::tuple<Args...>& t) {
+	using namespace std;
+	std::cout << "(";
+	//TuplePrinter<decltype(t), sizeof...(Args)>::print(t);
+	cout << "not zero" << endl;
+		
+	std::cout << ")\n";
 }
 
+ 
 int main() {
-	srand(time(NULL));
 	using namespace std;
 
-	tuple<int, int, int, int> tuple1;
-	tuple<int, int, int, int> tuple2;
-	tuple<int, int, int, int, int, int, int, int> tuple3;
+	double a11 = 43;
+	decltype(a11) b;
+	cout << b << endl;
 
-	tuple<int, double, float, string> tuple4;
-
-	thread thArr[10];
-	for (int i = 0; i < 10; i++) {
-		thArr[i] = thread(print_line, i);
-	}
-
-	int a = 3, b, c, d;
-	tuple1 = {3, 3, 3, 3};
-	tuple2 = {3, 3, 3, 3};
-	tuple3 = tuple_cat(tuple1, tuple2);
-
-	cout << "tuple3: " << get<0>(tuple3) << endl;
-
-
-
-	tie(a,b,c,d);
-
-	// cout << tuple1 << endl << tuple2 << endl << tuple3 << endl;
-
-	for (int i = 0; i < 10; i++) {
-		thArr[i].join();
-	}
-
-
-
+  std::tuple<int, std::string, float> t1(10, "Test", 3.14);
+  int n = 7;
+  auto t2 = std::tuple_cat(t1, std::make_tuple("Foo", "bar"), t1, std::tie(n));
+  n = 42;
+	tuple<int, int, int> n1; // = {0, "Hello", 2, 3, 4, 5};
+  print(n1);
 	return 0;
-}
+} 
