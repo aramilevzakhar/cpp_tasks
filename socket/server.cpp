@@ -12,29 +12,41 @@
 
 #define PORT 8080
 
+char buffer[1024];
+int *sock = new int[3];
 
-void hear(int* v1, int v2) {
+void hear(int* v1) {
+	using namespace std;
 	int new_socket, valread;
 
 	while (true) {
-		char* buffer = new char[1024];
+		memset(buffer, 0, strlen(buffer));
 		valread = read(*v1, buffer, 1024);
 		printf("%s\n", (buffer) );
-		delete [] buffer;
+		for (int i=0;i<3;i++) {
+			//send(sock[i], mess.c_str(), mess.length(), 0);
+			if (*v1 != sock[i])
+				send(sock[i], buffer, strlen(buffer), 0);
+			//cout << sock[i] << endl;
+		}
 
 	}
-	std::cout << "(close)v2: " << v2 << std::endl;
+	//std::cout << "(close)v2: " << v2 << std::endl;
 
 
 }
 
-void sending(int* v1) {
-	std::string mess;
+void sending(int* sock) {
+	using namespace std;
 	while (true) {
 		// getline(std::cin, mess);
 		// mess = std::to_string(i) + mess + "\n";
 
-		send(*v1, mess.c_str(), mess.length(), 0);
+		for (int i=0;i<3;i++) {
+			//send(sock[i], mess.c_str(), mess.length(), 0);
+			send(*sock, buffer, 1024, 0);
+			cout << sock[i] << endl;
+		}
 	}
 
 
@@ -76,28 +88,10 @@ int main() {
       exit(EXIT_FAILURE);
   }
 
-
-	/*
-	cout << "Server lissent to you.." << endl;
-	thread sss1(hear, &server_fd, &address, &addrlen, buffer);
-	cout << "I'm here" << endl;
-	*/
-
-
-	/*
-	if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
-			perror("accept");
-			exit(EXIT_FAILURE);
-	} else {
-		cout << "A new communication.." << endl;
-	}
-	*/
-
 	vector<int*> th_array = {};
 	thread th_arr[3];
 	int i = 0;
 
-	int *sock = new int[3];
 
 	while (true) {
 		if ((sock[i] = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
@@ -107,15 +101,9 @@ int main() {
 			cout << "A new person.." << endl;
 		}
 		//array.push_back(&sock);
-		cout << " socket = " << &sock[i] << endl;
-		th_arr[i] = thread(hear, &sock[i], i);
+		cout<<" socket = "<<&sock[i]<< endl;
+		th_arr[i] = thread(hear, &sock[i]);
 		i++;
-
-
-		//thread sss1(hear, &sock);
-		//thread sss2(sending, &sock);
-		
-		//sss1.join();
 
 
 	}
@@ -127,14 +115,5 @@ int main() {
 
 
 	th_arr[0].join();
-	/*
-  if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
-      perror("accept");
-      exit(EXIT_FAILURE);
-  }
-  valread = read( new_socket , buffer, 1024);
-  printf("%s\n", buffer );
-  printf("Hello message sent\n");
-	*/
 	return 0;
 }

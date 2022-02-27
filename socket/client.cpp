@@ -20,9 +20,9 @@ void lissen(int* sock) {
 	char buffer[1024];
 	cout << "helo:" << endl;
 	while (true) {
-
 		valread = read(*sock, buffer, 1024);
 		printf("%s\n", buffer);
+		memset(buffer, 0, strlen(buffer));
 
 	}
 }
@@ -31,7 +31,7 @@ void lissen(int* sock) {
 void sending(int* sock) {
 	std::string mess;
 	while (true) {
-		std::cout << "Type message please.. " << std::endl;
+		//std::cout << "Type message please.. " << std::endl;
 		getline(std::cin, mess);
 
 
