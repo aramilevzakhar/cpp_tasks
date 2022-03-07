@@ -17,10 +17,11 @@ void printInt(T* arr) {
 int main() {
 	using namespace std;
 	vector<int> m1;
-	vector<int> arr = {1, 342, 324, 54, 43, 54, 3, 8, 12};
+	vector<int> arr = {1, 234, 23, 12, 1, 342, 324, 54, 43, 54, 3, 8, 12};
 	vector<int>::iterator it = find(arr.begin(), arr.end(), 8);
 	cout << "iterator: " << *it << endl;
 	arr.insert(it, 122112213);
+	reverse(arr.begin(), arr.end()); // reverse
 
 	vector<int>::iterator first;
 	vector<int>::iterator last;
@@ -46,11 +47,8 @@ int main() {
 	cout << "even/ocasional: " << m1.capacity() << endl;
 	for (int i = 0; i < 10; i++) {
 		m1.push_back(i);
-
 	}
-
-
-
+	
 	cout << "even/ocasional: " << m1.capacity() << endl;
 	vector<int> qu;
 	qu.push_back(1);
@@ -60,6 +58,27 @@ int main() {
 	qu.push_back(6);
 	qu.push_back(6);
 	qu[2] = 123;
+	deque<double> qu1;
+	qu1.push_back(123);
+	qu1.push_back(123);
+	qu1.push_back(123);
+	qu1.push_back(123);
+	qu1.push_back(123);
+	qu1.push_back(123);
+	qu1.push_front(324);
+	qu1.push_front(324);
+	qu1.push_front(324);
+	qu1.push_front(324);
+	qu1.push_front(324);
+	qu1.push_front(324);
+	qu1[4] = 123;
+
+	cout << "deque" << endl;
+	for (auto it = qu1.begin(); it != qu1.end(); it++) {
+		cout << *it << endl;
+	}
+	cout << "endl" << endl;
+
 
 
 	/*
@@ -71,11 +90,5 @@ int main() {
 	cout << "wakatta" << endl;
 	for_each (m1.begin(), m1.end(), printInt);
 	*/
-
-
-
-
-
-
 	return 0;
 }

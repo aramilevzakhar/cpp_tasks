@@ -1,4 +1,5 @@
 #include <iostream>
+#include "aaa.h"
 #define private public 
 #define class struct
 #define loop for
